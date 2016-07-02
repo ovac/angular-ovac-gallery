@@ -1,0 +1,26 @@
+{
+  "name": "angular-ovac-gallery",
+  "authors": [
+    "Ariama Victor (A.K.A. OVAC) <iamovac@gmail.com>"
+  ],
+  "description": "Angular ovac gallery. An easy to use and function angular gallery",
+  "main": "angular-ovac-gallery.js",
+  "keywords": [
+    "Angular",
+    "gallery",
+    "ovac"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/ovac/angular-ovac-gallery#readme",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.7",
+    "semantic-ui-icon": "^2.2.1"
+  }
+}

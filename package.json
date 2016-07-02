@@ -1,0 +1,26 @@
+{
+  "name": "angular-ovac-gallery",
+  "version": "1.0.0",
+  "description": "Angular ovac gallery",
+  "main": "angular-ovac-gallery.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ovac/angular-ovac-gallery.git"
+  },
+  "keywords": [
+    "angular-ovac-gallery"
+  ],
+  "author": "Ariama Victor <iamovac@gmail.com> (A.K.A. OVAC)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ovac/angular-ovac-gallery/issues"
+  },
+  "homepage": "https://github.com/ovac/angular-ovac-gallery#readme",
+  "dependencies": {
+    "angular": "^1.5.7",
+    "semantic-ui-icon": "^2.2.1"
+  }
+}
