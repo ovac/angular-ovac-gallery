@@ -68,7 +68,7 @@
                 '$scope',
                 function ($scope) {
                     $scope.$on( `openGallery${$scope.name?':'+$scope.name:''}`, function (e, args) {
-                        $scope.openGallery(args.index);
+                      if ($scope.images && $scope.images.length ) $scope.openGallery(args.index);
                     });
                 }
             ],
@@ -125,17 +125,16 @@
                 };
 
                 var showImage = function (i) {
-
                   if(scope.images && scope.images.length){
+                    console.log('hello')
                     loadImage(scope.index, scope.imageKey).then(
                       resp => { scope.img = resp.src; smartScroll(scope.index); },
                       () => { loadImage(scope.index, 'image')
                         .then(
                           resp => { scope.img = resp.src; smartScroll(scope.index); },
-                          () => { scope.img = scope.imgbase+scope.images[i]['img']||'http://www.srinivasmusic.com/assets/images/oops.png'; scope.loading = false;}
+                          () => { scope.img = scope.imgbase+scope.images[i]['img']||'http://www.srinivasmusic.com/assets/images/oops.png'; scope.loading = false;},
+                          (scope.description = (scope.images ? scope.images[i][scope.descriptionKey]: false) || '')
                     )})}
-
-                    scope.description = (scope.images ? scope.images[i][scope.descriptionKey]: false) || '';
                 };
 
                 scope.showImageDownloadButton = function () {
