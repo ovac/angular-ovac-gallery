@@ -66,7 +66,7 @@
                 scope.opened = false;
                 scope.thumb_wrapper_width = 0;
                 scope.thumbs_width = 0;
-                var loadImage = function (i) {
+                var loadImage = function (i, key) {
                     var deferred = $q.defer();
                     var image = new Image();
                     image.onload = function () {
@@ -81,25 +81,27 @@
                     };
                     // image.src = scope.images[i].img; as default
                     // Allow user to define the image Key
-                    image.src = '' + scope.imgbase + scope.images[i][scope.imageKey];
+                    image.src = '' + scope.imgbase + scope.images[i][key] || 'http://www.srinivasmusic.com/assets/images/oops.png';
                     scope.loading = true;
                     return deferred.promise;
                 };
                 var showImage = function (i) {
-                    loadImage(scope.index).then(function (resp) {
-                        scope.img = resp.src;
-                        smartScroll(scope.index);
-                    });
-                    scope.description = scope.images[i][scope.descriptionKey] || '';
+                    if (scope.images && scope.images.length) {
+                        loadImage(scope.index, scope.imageKey).then(function (resp) { scope.img = resp.src; smartScroll(scope.index); }, function () {
+                            loadImage(scope.index, 'image')
+                                .then(function (resp) { scope.img = resp.src; smartScroll(scope.index); }, function () { scope.img = scope.imgbase + scope.images[i]['img'] || 'http://www.srinivasmusic.com/assets/images/oops.png'; scope.loading = false; });
+                        });
+                    }
+                    scope.description = (scope.images ? scope.images[i][scope.descriptionKey] : false) || '';
                 };
                 scope.showImageDownloadButton = function () {
-                    if (scope.images[scope.index] == null || scope.images[scope.index][scope.downloadSrc] == null || !scope.saveImg)
+                    if (!scope.images || scope.images[scope.index] == null || scope.images[scope.index][scope.downloadSrc] == null || !scope.saveImg)
                         return;
                     var image = scope.images[scope.index];
                     return angular.isDefined(image[scope.downloadSrc]) && 0 < image[scope.downloadSrc].length;
                 };
                 scope.getImageDownloadSrc = function () {
-                    if (scope.images[scope.index] == null || !scope.saveImg)
+                    if (!scope.images || scope.images[scope.index] == null || !scope.saveImg)
                         return;
                     return '' + scope.imgbase + scope.images[scope.index][scope.downloadSrc];
                 };
@@ -176,7 +178,7 @@
                 };
                 var smartScroll = function (index) {
                     $timeout(function () {
-                        var len = scope.images.length, width = scope.thumbs_width, item_scroll = parseInt('' + (width / len), 10), i = index + 1, s = Math.ceil(len / i);
+                        var len = (scope.images ? scope.images.length : 0), width = scope.thumbs_width, item_scroll = parseInt('' + (width / len), 10), i = index + 1, s = Math.ceil(len / i);
                         $thumbwrapper[0].scrollLeft = 0;
                         $thumbwrapper[0].scrollLeft = i * item_scroll - (s * item_scroll);
                     }, 100);
